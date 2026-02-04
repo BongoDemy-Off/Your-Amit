@@ -1,7 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
+const API_URL = "https://script.google.com/macros/s/AKfycby71Mnt0KdUO2D-pDeBAop9hb_Fs6OP2ui-iLgTbsJqI_PhW_a4db8BnMvYQ53MNqIT/exec";
+const DEFAULT_HERO_IMAGE = "https://pbs.twimg.com/profile_images/1610996884638760962/8Lq4vJ6X_400x400.jpg";
+
+/**
+ * Converts a Google Drive sharing link to a direct CDN link.
+ * Using lh3.googleusercontent.com avoids 403 rate limits common with export=download.
+ */
+const getGoogleDriveDirectLink = (url: string): string => {
+  if (!url) return '';
+  
+  // Extract ID from patterns like: /file/d/ID/view or id=ID
+  const idMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+  
+  if (idMatch && idMatch[1]) {
+    return `https://lh3.googleusercontent.com/d/${idMatch[1]}`;
+  }
+  
+  // If it's not a drive link, return as is (e.g. if user put a direct jpg link)
+  return url;
+};
+
 export const Hero: React.FC = () => {
+  const [heroImage, setHeroImage] = useState<string>(DEFAULT_HERO_IMAGE);
+
+  useEffect(() => {
+    const fetchHeroImage = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        
+        if (data && data.Hero_Image_Link) {
+          const directLink = getGoogleDriveDirectLink(data.Hero_Image_Link);
+          if (directLink) {
+            setHeroImage(directLink);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching hero image config:", error);
+        // Silently fail to default image
+      }
+    };
+
+    fetchHeroImage();
+  }, []);
+
   return (
     <div className="relative pt-24 pb-12 md:pt-32 md:pb-24 overflow-hidden bg-gradient-to-br from-green-50 via-white to-gray-100">
       {/* Background Shapes */}
@@ -64,9 +108,9 @@ export const Hero: React.FC = () => {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-bnp-green/20 to-bnp-red/10 rounded-full blur-3xl -z-10"></div>
               
               <img 
-                src="https://pbs.twimg.com/profile_images/1610996884638760962/8Lq4vJ6X_400x400.jpg" 
+                src={heroImage} 
                 alt="Aninda Islam Amit" 
-                className="relative w-full h-auto rounded-2xl shadow-2xl border-4 border-white object-cover aspect-[4/5]"
+                className="relative w-full h-auto rounded-2xl shadow-2xl border-4 border-white object-cover aspect-[4/5] bg-gray-200 transition-opacity duration-500"
               />
               
               {/* Floating Badge */}

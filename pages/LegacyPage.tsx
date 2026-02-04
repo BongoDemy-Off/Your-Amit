@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Building, 
   GraduationCap, 
@@ -11,7 +11,57 @@ import {
   ArrowRight
 } from 'lucide-react';
 
+const API_URL = "https://script.google.com/macros/s/AKfycby71Mnt0KdUO2D-pDeBAop9hb_Fs6OP2ui-iLgTbsJqI_PhW_a4db8BnMvYQ53MNqIT/exec";
+
+// Default images to show while loading or on error
+const DEFAULT_IMAGES = {
+  tariqul: "https://upload.wikimedia.org/wikipedia/en/2/23/Tariqul_Islam.jpg",
+  amit: "https://pbs.twimg.com/profile_images/1610996884638760962/8Lq4vJ6X_400x400.jpg"
+};
+
+/**
+ * Converts a Google Drive sharing link to a direct CDN link.
+ * Using lh3.googleusercontent.com avoids 403 rate limits common with export=download.
+ */
+const getGoogleDriveDirectLink = (url: string): string => {
+  if (!url) return '';
+  
+  // Extract ID from patterns like: /file/d/ID/view or id=ID
+  const idMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+  
+  if (idMatch && idMatch[1]) {
+    return `https://lh3.googleusercontent.com/d/${idMatch[1]}`;
+  }
+  
+  // If it's not a drive link, return as is (e.g. if user put a direct jpg link)
+  return url;
+};
+
 export const LegacyPage: React.FC = () => {
+  const [images, setImages] = useState(DEFAULT_IMAGES);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        
+        setImages(prev => ({
+          tariqul: data.Tariqul_Islam_Portrait_Link 
+            ? getGoogleDriveDirectLink(data.Tariqul_Islam_Portrait_Link) 
+            : prev.tariqul,
+          amit: data.Aninda_Islam_Amit_Portrait_Link 
+            ? getGoogleDriveDirectLink(data.Aninda_Islam_Amit_Portrait_Link) 
+            : prev.amit
+        }));
+      } catch (error) {
+        console.error("Error fetching legacy page images:", error);
+      }
+    };
+
+    fetchImages();
+  }, []);
+
   return (
     <div className="container mx-auto px-4">
       {/* Page Header */}
@@ -39,7 +89,7 @@ export const LegacyPage: React.FC = () => {
               <div className="relative inline-block mb-6 group">
                 <div className="absolute inset-0 bg-gray-900 rounded-full blur-md opacity-20 group-hover:opacity-30 transition-opacity"></div>
                 <img 
-                  src="https://upload.wikimedia.org/wikipedia/en/2/23/Tariqul_Islam.jpg" 
+                  src={images.tariqul} 
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = 'https://ui-avatars.com/api/?name=Tariqul+Islam&background=1f2937&color=fff&size=256';
                   }}
@@ -138,7 +188,7 @@ export const LegacyPage: React.FC = () => {
               <div className="relative inline-block mb-6 group">
                 <div className="absolute inset-0 bg-bnp-green rounded-full blur-md opacity-20 group-hover:opacity-30 transition-opacity"></div>
                 <img 
-                  src="https://pbs.twimg.com/profile_images/1610996884638760962/8Lq4vJ6X_400x400.jpg" 
+                  src={images.amit} 
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = 'https://ui-avatars.com/api/?name=Aninda+Islam&background=006a4e&color=fff&size=256';
                   }}
