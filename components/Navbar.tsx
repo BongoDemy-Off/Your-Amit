@@ -5,6 +5,8 @@ import { VolunteerModal } from './VolunteerModal';
 
 const links: NavLink[] = [
   { label: 'হোম', href: '#home' },
+  { label: 'ঐতিহ্য ও অবদান', href: '#legacy' },
+  { label: 'আমাদের সম্পর্কে', href: '#about' },
   { label: 'ইশতেহার', href: '#manifesto' },
   { label: 'পোস্টার', href: '#poster' },
   { label: 'যোগাযোগ', href: '#contact' },

@@ -6,6 +6,8 @@ import { Manifesto } from './components/Manifesto';
 import { PosterMaker } from './components/PosterMaker';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
+import { LegacyPage } from './pages/LegacyPage';
+import { AboutSection } from './components/AboutSection';
 
 export default function App() {
   return (
@@ -19,6 +21,14 @@ export default function App() {
 
         <section id="schedule" className="py-16 bg-white">
           <LiveSchedule />
+        </section>
+
+        <section id="legacy" className="py-16 md:py-24 bg-gray-50">
+          <LegacyPage />
+        </section>
+
+        <section id="about" className="py-16 md:py-24 bg-white">
+          <AboutSection />
         </section>
 
         <section id="manifesto" className="py-16 md:py-24 bg-gray-50">

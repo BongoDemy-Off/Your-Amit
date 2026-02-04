@@ -64,7 +64,7 @@ export const Hero: React.FC = () => {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-bnp-green/20 to-bnp-red/10 rounded-full blur-3xl -z-10"></div>
               
               <img 
-                src="https://picsum.photos/seed/aninda/600/700" 
+                src="https://pbs.twimg.com/profile_images/1610996884638760962/8Lq4vJ6X_400x400.jpg" 
                 alt="Aninda Islam Amit" 
                 className="relative w-full h-auto rounded-2xl shadow-2xl border-4 border-white object-cover aspect-[4/5]"
               />
