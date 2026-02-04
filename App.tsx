@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { LiveSchedule } from './components/LiveSchedule';
 import { Manifesto } from './components/Manifesto';
 import { PosterMaker } from './components/PosterMaker';
 import { ContactSection } from './components/ContactSection';
@@ -14,6 +15,10 @@ export default function App() {
       <main className="flex-grow">
         <section id="home">
           <Hero />
+        </section>
+
+        <section id="schedule" className="py-16 bg-white">
+          <LiveSchedule />
         </section>
 
         <section id="manifesto" className="py-16 md:py-24 bg-gray-50">
