@@ -3,9 +3,9 @@ import { Facebook, Twitter, Youtube, Flag } from 'lucide-react';
 import { SocialLink } from '../types';
 
 const socialLinks: SocialLink[] = [
-  { platform: 'Facebook', href: '#', icon: Facebook },
-  { platform: 'Twitter', href: '#', icon: Twitter },
-  { platform: 'Youtube', href: '#', icon: Youtube },
+  { platform: 'Facebook', href: 'https://www.facebook.com/amitislambnp', icon: Facebook },
+  { platform: 'Twitter', href: 'https://x.com/aninda_islam', icon: Twitter },
+  { platform: 'Youtube', href: 'https://youtube.com/@anindaislamamitofficial?si=1vL0ejBJp4NR4r1W', icon: Youtube },
 ];
 
 export const Footer: React.FC = () => {
@@ -47,6 +47,8 @@ export const Footer: React.FC = () => {
                 <a 
                   key={link.platform}
                   href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-gray-800 p-3 rounded-full hover:bg-bnp-green transition duration-300"
                   aria-label={link.platform}
                 >
