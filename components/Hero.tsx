@@ -62,8 +62,8 @@ export const Hero: React.FC = () => {
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold leading-tight text-gray-900 font-sans">
-              উন্নয়ন ও গণতন্ত্রের পক্ষে, <br />
-              <span className="text-bnp-green">ধানের শীষে</span> ভোট দিন
+              যশোরের উন্নয়ন আর অধিকার, <br />
+              <span className="text-bnp-green">ধানের শীষেই</span> ভরসা সবার।
             </h1>
             
             <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto md:mx-0 leading-relaxed font-medium">
