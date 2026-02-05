@@ -8,6 +8,7 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { LegacyPage } from './pages/LegacyPage';
 import { AboutSection } from './components/AboutSection';
+import { GenZBadge } from './components/GenZBadge';
 
 export default function App() {
   return (
@@ -55,6 +56,12 @@ export default function App() {
         <section id="contact" className="py-16 md:py-24 bg-gray-100">
           <ContactSection />
         </section>
+
+        {/* New Gen Z Badge Section */}
+        <section className="py-16 bg-white">
+           <GenZBadge />
+        </section>
+
       </main>
 
       <Footer />
